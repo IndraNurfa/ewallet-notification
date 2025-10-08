@@ -35,7 +35,7 @@ func (*NotificationHistory) TableName() string {
 
 type InternalNotificationRequest struct {
 	TemplateName string `valid:"required"`
-	Recepient    string `valid:"required,email"`
+	Recipient    string `valid:"required;email"`
 	Placeholder  map[string]string
 }
 
