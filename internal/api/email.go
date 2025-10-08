@@ -13,14 +13,13 @@ type EmailAPI struct {
 	notification.UnimplementedNotificationServiceServer
 }
 
-func (api *EmailAPI) SendEmail(ctx context.Context, req *notification.SendNotificationRequest) (*notification.SendNotificationResponse, error) {
+func (api *EmailAPI) SendNotification(ctx context.Context, req *notification.SendNotificationRequest) (*notification.SendNotificationResponse, error) {
 	var (
 		log = helpers.Logger
 	)
-
 	internalReq := models.InternalNotificationRequest{
 		TemplateName: req.TemplateName,
-		Recepient:    req.Recipient,
+		Recipient:    req.Recipient,
 		Placeholder:  req.Placeholders,
 	}
 
@@ -40,6 +39,6 @@ func (api *EmailAPI) SendEmail(ctx context.Context, req *notification.SendNotifi
 	}
 
 	return &notification.SendNotificationResponse{
-		Message: "success to send email",
+		Message: "success",
 	}, nil
 }

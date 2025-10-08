@@ -15,7 +15,7 @@ func (r *EmailRepo) GetTemplate(ctx context.Context, templateName string) (model
 	var (
 		resp models.NotificationTemplate
 	)
-	err := r.DB.Where("template_name = ?", templateName).First(&resp).Error
+	err := r.DB.Where("template_name = ?", templateName).Last(&resp).Error
 	return resp, err
 }
 
