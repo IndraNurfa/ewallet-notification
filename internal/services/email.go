@@ -21,7 +21,7 @@ func (s *EmailService) SendEmail(ctx context.Context, req models.InternalNotific
 		return errors.Wrap(err, "failed to get template email")
 	}
 
-	tmpl, err := template.New("emailTemplete").Parse(emailTemplate.Body)
+	tmpl, err := template.New("emailTemplate").Parse(emailTemplate.Body)
 	if err != nil {
 		return errors.Wrap(err, "failed to parse email template")
 	}
@@ -34,29 +34,28 @@ func (s *EmailService) SendEmail(ctx context.Context, req models.InternalNotific
 	}
 
 	email := external.Email{
-		To:      req.Recepient,
+		To:      req.Recipient,
 		Subject: emailTemplate.Subject,
 		Body:    tpl.String(),
 	}
 	err = email.SendEmail()
 	if err != nil {
 		notifHistory := &models.NotificationHistory{
-			Recipient:    req.Recepient,
+			Recipient:    req.Recipient,
 			TemplateID:   emailTemplate.ID,
 			Status:       "failed",
 			ErrorMessage: err.Error(),
 		}
-
 		s.EmailRepo.InsertNotificationHistory(ctx, notifHistory)
+
 		return errors.Wrap(err, "failed to send email")
 	}
 
 	notifHistory := &models.NotificationHistory{
-		Recipient:  req.Recepient,
+		Recipient:  req.Recipient,
 		TemplateID: emailTemplate.ID,
 		Status:     "success",
 	}
-
 	s.EmailRepo.InsertNotificationHistory(ctx, notifHistory)
 
 	return nil
