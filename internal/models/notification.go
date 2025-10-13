@@ -10,7 +10,7 @@ type NotificationTemplate struct {
 	ID           int
 	TemplateName string `gorm:"column:template_name;type:varchar(255);uniqueIndex"`
 	Subject      string `gorm:"column:subject;type:varchar(255)"`
-	Body         string `gorm:"column:body;type:varchar(255)"`
+	Body         string `gorm:"column:body;type:text"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
