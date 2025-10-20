@@ -16,6 +16,9 @@ func main() {
 	// load db
 	helpers.SetupMySQL()
 
+	// run for seed notification template
+	// helpers.RunSeeder()
+
 	// run grpc
 	cmd.ServeGRPC()
 
